@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hoy Barato - 订单</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .orders-container {
+            padding: 15px;
+            padding-bottom: 70px;
+        }
+        
+        .orders-header {
+            background-color: var(--primary-red);
+            color: var(--white);
+            padding: 15px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .order-tabs {
+            display: flex;
+            margin: 15px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .order-tab {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .order-tab.active {
+            color: var(--primary-red);
+            border-bottom: 2px solid var(--primary-red);
+            font-weight: bold;
+        }
+        
+        .order-list {
+            margin-top: 15px;
+        }
+        
+        .order-item {
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: var(--shadow);
+        }
+        
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .order-id {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .order-status {
+            font-weight: bold;
+        }
+        
+        .status-pending {
+            color: #f39c12;
+        }
+        
+        .status-shipping {
+            color: #3498db;
+        }
+        
+        .status-completed {
+            color: #2ecc71;
+        }
+        
+        .order-content {
+            display: flex;
+            margin-bottom: 15px;
+        }
+        
+        .order-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 5px;
+            object-fit: cover;
+            margin-right: 15px;
+        }
+        
+        .order-info {
+            flex: 1;
+        }
+        
+        .order-product-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .order-spec {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        
+        .order-price {
+            color: var(--primary-red);
+            font-weight: bold;
+        }
+        
+        .order-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .order-date {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .order-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .order-btn {
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .primary-btn {
+            background-color: var(--primary-red);
+            color: var(--white);
+        }
+        
+        .secondary-btn {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+        
+        .empty-orders {
+            text-align: center;
+            padding: 40px 20px;
+            color: #666;
+        }
+        
+        .empty-icon {
+            font-size: 50px;
+            margin-bottom: 15px;
+            color: #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="orders-header" id="ordersHeader">订单</div>
+        
+        <div class="orders-container">
+            <div class="order-tabs">
+                <div class="order-tab active" data-status="all" id="tabAll">全部</div>
+                <div class="order-tab" data-status="pending_payment" id="tabPending">待付款</div>
+                <div class="order-tab" data-status="shipping" id="tabShipping">待发货</div>
+                <div class="order-tab" data-status="completed" id="tabCompleted">已完成</div>
+            </div>
+            
+            <div class="order-list" id="orderList">
+                <!-- 订单将通过JS动态加载 -->
+            </div>
+        </div>
+
+        <!-- 底部导航栏 -->
+        <div class="nav-bar">
+            <a href="home.html" class="nav-item">
+                <i class="fas fa-home nav-icon"></i>
+                <span class="nav-text">首页</span>
+            </a>
+            <a href="chat.html" class="nav-item">
+                <i class="fas fa-comment nav-icon"></i>
+                <span class="nav-text">聊天</span>
+            </a>
+            <a href="orders.html" class="nav-item active">
+                <i class="fas fa-shopping-bag nav-icon"></i>
+                <span class="nav-text">订单</span>
+            </a>
+            <a href="account.html" class="nav-item">
+                <i class="fas fa-user nav-icon"></i>
+                <span class="nav-text">我的</span>
+            </a>
+        </div>
+    </div>
+
+    <script src="../js/language.js"></script>
+    <script src="../js/products.js"></script>
+    <script src="../js/orders.js"></script>
+</body>
+</html>

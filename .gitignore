@@ -1,0 +1,12 @@
+# Node / macOS / Editor ignores
+node_modules/
+.DS_Store
+Thumbs.db
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Local servers / build
+server.js
+*.local
+.env
