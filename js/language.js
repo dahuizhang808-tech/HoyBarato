@@ -20,70 +20,62 @@ const translations = {
     }
 };
 
-// 当前语言
-let currentLang = 'zh';
+// 使用单独命名避免与各页面脚本冲突
+let hbLang = localStorage.getItem('hoyBaratoLang') || 'zh';
 
-// DOM 加载完成后执行
 document.addEventListener('DOMContentLoaded', () => {
-    // 获取语言按钮
     const langButtons = document.querySelectorAll('.language-btn');
     const continueBtn = document.getElementById('continueBtn');
-    
-    // 为语言按钮添加点击事件
-    langButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            // 移除所有按钮的active类
-            langButtons.forEach(btn => btn.classList.remove('active'));
-            // 为当前点击的按钮添加active类
-            button.classList.add('active');
-            
-            // 更新当前语言
-            currentLang = button.getAttribute('data-lang');
-            
-            // 更新页面文本
-            updateLanguage();
+
+    if (langButtons && langButtons.length > 0) {
+        langButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                langButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                hbLang = button.getAttribute('data-lang');
+                safeUpdateLanguage();
+            });
         });
-    });
-    
-    // 继续按钮点击事件
-    continueBtn.addEventListener('click', () => {
-        // 保存语言选择
-        localStorage.setItem('hoyBaratoLang', currentLang);
-        // 跳转到首页
-        window.location.href = 'pages/home.html';
-    });
-    
-    // 检查是否已有语言设置
+    }
+
+    if (continueBtn) {
+        continueBtn.addEventListener('click', () => {
+            localStorage.setItem('hoyBaratoLang', hbLang);
+            window.location.href = 'pages/home.html';
+        });
+    }
+
     const savedLang = localStorage.getItem('hoyBaratoLang');
     if (savedLang) {
-        currentLang = savedLang;
-        // 更新选中的语言按钮
-        langButtons.forEach(btn => {
-            if (btn.getAttribute('data-lang') === currentLang) {
-                btn.classList.add('active');
-            } else {
-                btn.classList.remove('active');
-            }
-        });
-        // 更新页面文本
-        updateLanguage();
+        hbLang = savedLang;
+        if (langButtons && langButtons.length > 0) {
+            langButtons.forEach(btn => {
+                if (btn.getAttribute('data-lang') === hbLang) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+        }
     }
+
+    safeUpdateLanguage();
 });
 
-// 更新页面文本
-function updateLanguage() {
-    const lang = translations[currentLang];
-    
-    // 更新标题和副标题
-    document.querySelector('.welcome-title').textContent = lang.welcomeTitle;
-    document.querySelector('.welcome-subtitle').textContent = lang.welcomeSubtitle;
-    
-    // 更新按钮文本
-    document.getElementById('continueBtn').textContent = lang.continueBtn;
-    
-    // 更新语言提示
-    document.querySelector('.language-note').textContent = lang.languageNote;
-    
-    // 更新页面语言
-    document.documentElement.lang = currentLang;
+function safeUpdateLanguage() {
+    const lang = translations[hbLang] || translations.zh;
+
+    const titleEl = document.querySelector('.welcome-title');
+    if (titleEl) titleEl.textContent = lang.welcomeTitle;
+
+    const subTitleEl = document.querySelector('.welcome-subtitle');
+    if (subTitleEl) subTitleEl.textContent = lang.welcomeSubtitle;
+
+    const continueBtnEl = document.getElementById('continueBtn');
+    if (continueBtnEl) continueBtnEl.textContent = lang.continueBtn;
+
+    const noteEl = document.querySelector('.language-note');
+    if (noteEl) noteEl.textContent = lang.languageNote;
+
+    document.documentElement.lang = hbLang;
 }
